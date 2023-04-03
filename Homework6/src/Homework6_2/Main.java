@@ -5,7 +5,7 @@ import java.util.Map;
 
 class Main {
     public static void main(String args[]) {
-        int[] randomNumbers = new int[]{75, 99, 5, 8, 8483, 59, 32, 19, 75, 59, 43, 19, 3, 43, 3, 59, 5, 8, 99, 8483, 32};
+        int[] randomNumbers = new int[]{75, 99, 5, 8, 8483, 59, 32, 19, 75, 59, 43, 19, 3, 43, 3, 59, 5, 8, 99, 8483, 32, 19};
         System.out.println(findDuplicate(randomNumbers));
 
     }
