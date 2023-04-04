@@ -6,19 +6,19 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        List<String> pallindroms = new ArrayList<>(Arrays.asList("Madam I'm Adam", "Was it a car or a cat I saw?", "Pull up if I pull up", "Niagara roar again ", " "));
-        for (int i = 0; i < pallindroms.size(); i++) {
-            if (isPalindrome(pallindroms.get(i)))
+        List<String> palindroms = new ArrayList<>(Arrays.asList("Madam I'm Adam", "Was it a car or a cat I saw?", "Pull up if I pull up", "Niagara roar again ", " "));
+        for (int i = 0; i < palindroms.size(); i++) {
+            if (isPalindrome(palindroms.get(i)))
             {
-               if ((pallindroms.get(i).equals(" "))) {
-                   System.out.println("Phrase is an empty string \"" + pallindroms.get(i) + "\" after removing non-alphanumeric characters.\n" +
+               if ((palindroms.get(i).equals(" "))) {
+                   System.out.println("Phrase is an empty string \"" + palindroms.get(i) + "\" after removing non-alphanumeric characters.\n" +
                            "Since an empty string reads the same forward and backward, it is a palindrome." );
                    break;
                }
-                System.out.println("Phrase \"" + pallindroms.get(i) + "\" is a palindrome." );
+                System.out.println("Phrase \"" + palindroms.get(i) + "\" is a palindrome." );
              }
               else {
-                System.out.println("Phrase \"" + pallindroms.get(i) + "\" is not a palindrome." );
+                System.out.println("Phrase \"" + palindroms.get(i) + "\" is not a palindrome." );
             }
         }
 

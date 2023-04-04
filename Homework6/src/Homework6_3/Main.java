@@ -15,9 +15,9 @@ public class Main {
         Set <Integer> numbersManager = new HashSet<>();
         for (int i = 0; i < numbers.length; i++) {
             if (numbersManager.contains(target - numbers[i])) {
-                for (int r = 0; r < numbers.length; r++) {
-                    if (numbers[r] == target - numbers[i]){
-                    return new int[]{r, i};
+                for (int f = 0; f < numbers.length; f++) {
+                    if (numbers[f] == target - numbers[i]){
+                    return new int[]{f, i};
                 }
             }
         }
