@@ -41,14 +41,8 @@ public class FileNavigator {
     }
 
   public boolean remove (String path) {
-    for (Iterator<String> cleaner = totalityName.keySet().iterator(); cleaner.hasNext(); ) {
-      String key = cleaner.next();
-      if (Objects.equals(key, path)) {
-        cleaner.remove();
-        return true;
-      }
-    }
-    return false;
+   totalityName.remove(path);
+   return true;
   }
   public List <FileData> filterBySize (){
     List<FileData> sortedFiles = new ArrayList<>();
