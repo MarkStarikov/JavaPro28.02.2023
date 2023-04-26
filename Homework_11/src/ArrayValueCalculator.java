@@ -1,15 +1,18 @@
 public class ArrayValueCalculator {
-
-    public int doCalc(String [][] numbersAsStrings) throws ArraySizeException, ArrayDataException {
-
+    public boolean check(String [][] numbersAsStrings)throws ArraySizeException{
         if (numbersAsStrings.length != 4) {
-            throw new ArraySizeException("Wrong array size. Try again.");
+            throw new ArraySizeException("Given array size has " +numbersAsStrings.length + " rows. Please enter an array with 4 rows.");
         }
+        for (int k = 0; k < numbersAsStrings.length; k++) {
+            if (numbersAsStrings[k].length != 4) {
+                throw new ArraySizeException("Row with index " + k + " has " + numbersAsStrings[k].length +" cells. All rows must have 4 cells");
+            }
+        }
+        return true;
+    }
+    public int doCalc(String [][] numbersAsStrings) throws ArrayDataException {
         int sum = 0;
          for (int i = 0; i < numbersAsStrings.length; i++) {
-            if (numbersAsStrings[i].length != 4) {
-                throw new ArraySizeException("Wrong row size. Try again.");
-            }
              for (int j = 0; j < numbersAsStrings[i].length; j++) {
                 try {
                     sum += Integer.parseInt(numbersAsStrings[i][j]);
