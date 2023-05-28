@@ -1,0 +1,66 @@
+
+CREATE TABLE IF NOT EXISTS public."Homework"
+(
+    id smallint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 32767 CACHE 1 ),
+    name text COLLATE pg_catalog."default" NOT NULL,
+    description text COLLATE pg_catalog."default",
+    CONSTRAINT "Homework_pkey" PRIMARY KEY (id)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public."Homework"
+    OWNER to postgres;
+
+
+______________________________________________________________
+CREATE TABLE IF NOT EXISTS public."Lesson"
+(
+    " id" smallint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 32767 CACHE 1 ),
+    name text COLLATE pg_catalog."default" NOT NULL,
+    updated_at text COLLATE pg_catalog."default",
+    homework_id smallint NOT NULL,
+    CONSTRAINT "Lesson_pkey" PRIMARY KEY (" id"),
+    CONSTRAINT homework_fkey FOREIGN KEY (homework_id)
+        REFERENCES public."Homework" (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public."Lesson"
+    OWNER to postgres;
+
+_____________________________________________________________
+CREATE TABLE IF NOT EXISTS public."Schedule"
+(
+    id integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
+    name text COLLATE pg_catalog."default",
+    "updatedAt" text COLLATE pg_catalog."default",
+    lessons_id smallint,
+    mtm_homework_id smallint,
+    CONSTRAINT "Schedule_pkey" PRIMARY KEY (id),
+    CONSTRAINT homework_id FOREIGN KEY (mtm_homework_id)
+        REFERENCES public."Homework" (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID,
+    CONSTRAINT lesson_id FOREIGN KEY (lessons_id)
+        REFERENCES public."Lesson" (" id") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public."Schedule"
+    OWNER to postgres;
