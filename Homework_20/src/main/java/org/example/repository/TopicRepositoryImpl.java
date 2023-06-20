@@ -1,7 +1,6 @@
 package org.example.repository;
 
 import org.example.ConnectionSingleton;
-import org.example.model.Question;
 import org.example.model.Topic;
 import org.example.repository.dao.TopicRepository;
 
@@ -11,11 +10,10 @@ import java.util.List;
 
 public class TopicRepositoryImpl implements TopicRepository{
 
-    private final static String CREATE =
+    private static final String CREATE =
             """
-            INSERT INTO topic(
-            id, name)
-            VALUES( ?, ?)        
+            INSERT INTO topic (name)
+            VALUES ( ?)        
             """;
     private final static String GET =
             """
@@ -43,13 +41,16 @@ public class TopicRepositoryImpl implements TopicRepository{
     @Override
    public Topic save(Topic topic){
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement(CREATE);
+            PreparedStatement preparedStatement = connection.prepareStatement(CREATE,
+                    Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, topic.getName());
-            preparedStatement.setInt(2, topic.getId());
             preparedStatement.execute();
+            ResultSet resultSet = preparedStatement.getGeneratedKeys();
+            resultSet.next();
+            topic.setId(resultSet.getInt(1));
             return topic;
         } catch (SQLException e) {
-            throw new RuntimeException("Cannot save data" + topic, e);
+            throw new RuntimeException("Cannot save data " + topic, e);
         }
     }
     @Override

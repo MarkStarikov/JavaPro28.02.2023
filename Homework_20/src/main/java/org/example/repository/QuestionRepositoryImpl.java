@@ -12,30 +12,30 @@ import java.util.List;
 public class QuestionRepositoryImpl implements QuestionRepository {
     private final static String CREATE =
             """
-            INSERT INTO postgres.question(test, topic_id)
+            INSERT INTO question(text, topic_id)
             VALUES (?, ?)        
             """;
     private final static String GET =
             """
-            SELECT * FROM postgres.question
+            SELECT * FROM question
             WHERE id = ?
             """;
     private final static String REMOVE =
             """
-            DELETE FROM postgres.question
+            DELETE FROM question
             WHERE id = ?
             """;
     private final static String UPDATE =
             """
-            UPDATE postgres.question
+            UPDATE question
             SET text = ?, topic_id = ?
             WHERE id = ?
             """;
     private final static String JOIN =
             """
-            SELECT * FROM postgres.question
-            INNER JOIN postgres.topic 
-            ON postgres.question.topic_id = postgres.topic.id
+            SELECT * FROM question
+            INNER JOIN topic 
+            ON question.topic_id = topic.id
             WHERE name = ?  
             """;
     private final Connection connection = ConnectionSingleton.getConnection();
@@ -43,14 +43,20 @@ public class QuestionRepositoryImpl implements QuestionRepository {
     @Override
     public Question save(Question question){
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement(CREATE);
+            PreparedStatement preparedStatement = connection.prepareStatement(CREATE,
+                    Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, question.getText());
             preparedStatement.setInt(2, question.getTopicId());
             preparedStatement.execute();
+            ResultSet resultSet = preparedStatement.getGeneratedKeys();
+            resultSet.next();
+            question.setId(resultSet.getInt(1));
+
             return question;
         } catch (SQLException e) {
             throw new RuntimeException("Cannot save data" + question, e);
         }
+
     }
     @Override
     public Question getSelected (int id){
